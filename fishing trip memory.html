@@ -1981,6 +1981,8 @@
       localStorage.setItem('WORKERS_AUTH_TOKEN', token);
       if (workerUrl) {
         localStorage.setItem('FISHING_TRIP_API_WORKER', workerUrl);
+        // CONFIG も更新
+        CONFIG.API.FISHING_TRIP_API_WORKER = workerUrl;
       }
       if (status) {
         status.textContent = '✓ 保存しました';

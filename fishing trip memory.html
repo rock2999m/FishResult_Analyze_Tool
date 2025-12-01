@@ -504,6 +504,8 @@
     const CONFIG = {
       API: {
         FISHING_TRIP_API_WORKER: localStorage.getItem('FISHING_TRIP_API_WORKER') || 'https://fishing-trip-api.yuji-fallline2999m.workers.dev',
+        WORKERS_AUTH_TOKEN: localStorage.getItem('WORKERS_AUTH_TOKEN') || "",
+        WORKER_PROXY_URL: localStorage.getItem('WORKER_PROXY_URL') || "",
         TIDE_PROXY_URL: localStorage.getItem('TIDE_PROXY_URL') || "",
         WATER_WORKER_URL: localStorage.getItem('WATER_WORKER_URL') || "",
         CLOUDINARY_CLOUD_NAME: localStorage.getItem('CLOUDINARY_CLOUD_NAME') || "drcaeidmm",
@@ -517,6 +519,10 @@
         GAS: 15000
       }
     };
+
+    // ★デバッグ：CONFIG の初期値を確認
+    console.log('[CONFIG] FISHING_TRIP_API_WORKER:', CONFIG.API.FISHING_TRIP_API_WORKER);
+    console.log('[CONFIG] WORKERS_AUTH_TOKEN:', CONFIG.API.WORKERS_AUTH_TOKEN ? '***' : 'empty');
 
     // ===== Logger =====
     const DEBUG_WATER = true; // 必要に応じて true/false で出力を切替
@@ -6988,6 +6994,4 @@
   </script>
 </body>
 </html>
-
-
 

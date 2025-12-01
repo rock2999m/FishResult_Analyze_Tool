@@ -512,7 +512,9 @@
       }
     };
 
-
+    // ★デバッグ：CONFIG の初期値を確認
+    console.log('[CONFIG] FISHING_TRIP_API_WORKER:', CONFIG.API.FISHING_TRIP_API_WORKER);
+    console.log('[CONFIG] WORKERS_AUTH_TOKEN:', CONFIG.API.WORKERS_AUTH_TOKEN ? '***' : 'empty');
 
     // ===== Logger =====
     const DEBUG_WATER = true; // 必要に応じて true/false で出力を切替
@@ -603,7 +605,22 @@
     // ===== OWM（開始/終了時の天気）- Cloudflare Worker プロキシ経由 =====
     const WORKER_PROXY_URL = CONFIG.API.WORKER_PROXY_URL;
     
-
+    // ★テスト：Worker プロキシが起動したらすぐテストする
+    (async () => {
+      console.log("[INIT] Testing Worker proxy connectivity...");
+      try {
+        const testRes = await fetch(WORKER_PROXY_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ lat: 34.62, lng: 135.05, isHistorical: false })
+        });
+        console.log("[INIT] Worker proxy response status:", testRes.status);
+        const testData = await testRes.json();
+        console.log("[INIT] Worker proxy response data:", testData);
+      } catch(e) {
+        console.error("[INIT] Worker proxy test failed:", e);
+      }
+    })();
     
     // ★追加：JST タイムスタンプを Unix タイムスタンプ（秒）に変換
     function getJSTTimestampForOWM(date = null){
@@ -643,9 +660,24 @@
         dt: isHistorical ? jstTimestamp : undefined
       };
       
-
+      // ★デバッグログ：プロキシへのリクエスト
+      console.log("[fetchWeather] Sending to Cloudflare Worker:", {
+        workerUrl: WORKER_PROXY_URL,
+        requestBody: requestBody,
+        targetDate: targetDate ? (typeof targetDate.toISOString === 'function' ? targetDate.toISOString() : String(targetDate)) : "(current)",
+        isHistorical: isHistorical,
+        jstTimestamp: jstTimestamp,
+        nowTimestamp: nowTimestamp
+      });
       
-
+      LOG.wx("[fetchWeather] Request to Worker:", {
+        lat: lat,
+        lng: lng,
+        isHistorical: isHistorical,
+        dt: isHistorical ? jstTimestamp : "(current)",
+        jst_datetime: targetDate ? (typeof targetDate.toISOString === 'function' ? targetDate.toISOString() : String(targetDate)) : new Date().toISOString(),
+        workerUrl: WORKER_PROXY_URL
+      });
       
       const ctrl = new AbortController();
       const t = setTimeout(() => ctrl.abort("timeout"), timeoutMs);
@@ -665,11 +697,13 @@
         }
         
         const j = await res.json();
+        console.log("[fetchWeather] Worker response received:", j);
         
         // ★ログ：レスポンス値
         const data = isHistorical ? (j.data?.[0] || {}) : (j.current || {});
         const rain1h = data.rain?.["1h"];
         const snow1h = data.snow?.["1h"];
+        console.log("[fetchWeather] Extracted data:", { data, rain1h, snow1h });
         LOG.wx("[fetchWeather] Response:", {
           timestamp_utc: new Date(data.dt * 1000).toISOString(),
           timezone: j.timezone,
@@ -6952,4 +6986,3 @@
   </script>
 </body>
 </html>
-

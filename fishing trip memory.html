@@ -17,14 +17,18 @@
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-50">
   <header class="sticky top-0 z-10 backdrop-blur bg-slate-950/70 border-b border-slate-800">
-    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-      <h1 class="text-lg font-semibold">釣りログ</h1>
-      <nav class="flex gap-2 text-sm">
-        <button id="navHome" class="px-3 py-1.5 rounded-xl border border-slate-700 hover:bg-slate-800">ホーム</button>
-        <button id="navRecord" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold">釣行の記録</button>
-        <button id="navTrips" class="px-3 py-1.5 rounded-xl bg-amber-700 hover:bg-amber-600 font-semibold">釣行の確認</button>
-        <button id="navCatches" class="px-3 py-1.5 rounded-xl bg-sky-700 hover:bg-sky-600 font-semibold">釣果の確認</button>
-        <button id="navSettings" class="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 font-semibold">設定</button>
+    <div class="max-w-4xl mx-auto px-4 py-3">
+      <div class="mb-3 text-center">
+        <h1 class="text-3xl font-bold">Fishing_Log</h1>
+      </div>
+      <nav class="flex gap-2 text-sm items-center justify-between">
+        <div class="flex gap-2">
+          <button id="navHome" class="px-3 py-1.5 rounded-xl border border-slate-700 hover:bg-slate-800">ホーム</button>
+          <button id="navRecord" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold">釣行の記録</button>
+          <button id="navTrips" class="px-3 py-1.5 rounded-xl bg-amber-700 hover:bg-amber-600 font-semibold">釣行の確認</button>
+          <button id="navCatches" class="px-3 py-1.5 rounded-xl bg-sky-700 hover:bg-sky-600 font-semibold">釣果の確認</button>
+        </div>
+        <button id="navSettings" class="px-3 py-1.5 rounded-xl hover:bg-slate-700 text-xl">⚙️</button>
       </nav>
     </div>
   </header>
@@ -148,32 +152,30 @@
   <main class="max-w-4xl mx-auto px-4 pb-28 pt-4">
     <!-- ホーム -->
     <section id="homeView" class="space-y-4">
-      <div class="rounded-2xl bg-slate-900 border border-slate-800 p-4">
-        <div class="text-xl font-bold">釣りログ ホーム</div>
-      </div>
       <!-- 釣行記録（1列、最上段） -->
       <div class="rounded-2xl bg-slate-900 border border-slate-800 p-4 flex flex-col gap-3">
         <div class="text-lg font-semibold">釣行の記録</div>
-        <button id="homeGoRecord" class="w-full py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold">釣行記録</button>
+        <button id="homeGoRecord" class="w-full py-8 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold">釣行記録</button>
       </div>
-      <!-- 確認Menu と 登録Menu を2列で表示（幅狭い場合でも2列を維持） -->
-      <div class="grid grid-cols-2 gap-4">
-        <!-- 確認Menu -->
-        <div class="rounded-2xl bg-slate-900 border border-slate-800 p-4 flex flex-col gap-3">
-          <div class="text-lg font-semibold text-slate-50">確認</div>
-          <button id="homeGoTrips" class="py-2 rounded-xl bg-amber-700 hover:bg-amber-600 font-semibold text-sm sm:text-base">釣行の確認</button>
-          <button id="homeGoCatches" class="py-2 rounded-xl bg-sky-700 hover:bg-sky-600 font-semibold text-sm sm:text-base">釣果の確認</button>
+      <!-- 確認Menu と 登録Menu を縦並びで表示 -->
+      <div class="pt-4"></div>
+      <div class="space-y-4">
+        <!-- 確認 -->
+        <div class="rounded-2xl bg-slate-900 border border-slate-800 p-4">
+          <div class="text-lg font-semibold text-slate-50 mb-3">確認</div>
+          <div class="flex flex-row gap-2">
+            <button id="homeGoTrips" class="flex-1 py-2 rounded-xl bg-amber-700 hover:bg-amber-600 font-semibold text-sm sm:text-base">釣行の確認</button>
+            <button id="homeGoCatches" class="flex-1 py-2 rounded-xl bg-sky-700 hover:bg-sky-600 font-semibold text-sm sm:text-base">釣果の確認</button>
+          </div>
         </div>
-        <!-- 登録Menu -->
-        <div class="rounded-2xl bg-slate-900 border border-slate-800 p-4 flex flex-col gap-3">
-          <div class="text-lg font-semibold text-slate-50">登録</div>
-          <button id="btnManualTripHome" class="py-2 rounded-xl bg-amber-700 hover:bg-amber-600 font-semibold text-sm sm:text-base">手動で釣行を登録</button>
-          <button id="homeAddManualCatch" class="py-2 rounded-xl bg-sky-700 hover:bg-sky-600 font-semibold text-sm sm:text-base">手動で釣果を追加</button>
+        <!-- 登録 -->
+        <div class="rounded-2xl bg-slate-900 border border-slate-800 p-4">
+          <div class="text-lg font-semibold text-slate-50 mb-3">登録</div>
+          <div class="flex flex-row gap-2">
+            <button id="btnManualTripHome" class="flex-1 py-2 rounded-xl bg-amber-700 hover:bg-amber-600 font-semibold text-sm sm:text-base">手動で釣行を登録</button>
+            <button id="homeAddManualCatch" class="flex-1 py-2 rounded-xl bg-sky-700 hover:bg-sky-600 font-semibold text-sm sm:text-base">手動で釣果を追加</button>
+          </div>
         </div>
-      </div>
-      <!-- 設定ボタン -->
-      <div class="rounded-2xl bg-slate-900 border border-slate-800 p-4">
-        <button id="homeGoSettings" class="w-full py-2 rounded-xl bg-slate-700 hover:bg-slate-600 font-semibold text-sm">⚙️ 設定</button>
       </div>
     </section>
 
